@@ -57,6 +57,19 @@ UserSchema.methods.generateAuthToken = function () {
   })
 }
 
+UserSchema.methods.removeToken = function (token) {
+  var user = this;
+
+  return user.update({
+    // finds any token that matches the passed token in the user's tokens array and removes it from the array
+    $pull: {
+      tokens: {
+        token
+      }
+    }
+  })
+}
+
 // `statics` is used for model methods (User.findByToken)
 UserSchema.statics.findByToken = function (token) {
   var User = this;
